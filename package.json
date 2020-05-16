@@ -1,0 +1,24 @@
+{
+  "name": "travel-planner-preproccessing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "viery",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.0",
+    "express": "^4.17.1",
+    "middleware": "^1.0.0",
+    "mongodb": "^2.2.33",
+    "mongoose": "^5.8.4",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.4",
+    "puppeteer": "^2.1.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  }
+}
