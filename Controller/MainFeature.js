@@ -13,8 +13,8 @@ exports.index = async function (req, res) {
   );
 
   var tanggalWisata = {
-    mulai: "5/21/2020",
-    akhir: "05/22/2020",
+    mulai: "6/4/2020",
+    akhir: "06/5/2020",
   };
 
   var userLocation = {
@@ -28,11 +28,11 @@ exports.index = async function (req, res) {
     userLocation,
     tanggalWisata
   );
-  tujuanWisata = await setSentiment(tujuanWisata);
+  tujuanWisata = await sortSentiment(tujuanWisata);
 
-  // var itinerary = await setItinerary(tujuanWisata[0], userLocation);
+  var itinerary = await setItinerary(tujuanWisata[0], userLocation, tanggalWisata.mulai);
 
-  response.ok(tujuanWisata, res);
+  response.ok(tujuanWisata[0], res);
 };
 
 async function getTujuanWisata(kategori, userLocation, tanggalWisata) {
@@ -43,12 +43,16 @@ async function getTujuanWisata(kategori, userLocation, tanggalWisata) {
   return tujuan;
 }
 
-async function setSentiment(tujuan) {
+async function sortSentiment(tujuan) {
   for (let index = 0; index < tujuan.length; index++) {
     tujuan[index] = tujuan[index].sort(compare);
   }
 
   return tujuan;
+}
+
+async function mixTujuan(tujuan){
+  
 }
 
 function getByKategori(kategori) {
@@ -87,8 +91,6 @@ async function eliminasiJarak(tujuan, userLocation) {
       });
     }
   }
-
-  // console.log(dataJarak.rows[0].elements[0]);
 
   return tujuanBaru;
 }
@@ -159,20 +161,78 @@ function compare(a, b) {
   return 0;
 }
 
-async function setItinerary(tujuan, start) {
-  var jamMulai = "07:00";
+async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
+  var jamBerangkat = "08:00";
+  var keterangan = "Perjalanan dari lokasi anda menuju ";
+  var itinerary = []
+  var jumlahTujuan = 1;
+  
+  var nilaiJarak = 0;
 
-  for (let index = 0; index < tujuan.length; index++) {
-    var durasi = await getJarak(start, tujuan[index].location);
-    var jamSelesai = await hitungJam(
-      jamMulai,
-      durasi.rows[0].elements[0].duration.text
-    );
-    console.log(jamSelesai);
+  var cadangan = dataTujuan.splice(4)
+
+  while(jumlahTujuan != 5) {
+    var jarakTerkecil = 999;
+    for (let index = 0; index < dataTujuan.length; index++) {
+      
+      var jarak = await getJarak(start, dataTujuan[index].location)
+      nilaiJarak = parseFloat(jarak.rows[0].elements[0].distance.text.split(" ")[0])
+      
+      if (nilaiJarak < jarakTerkecil) {
+        jarakTerkecil = nilaiJarak
+        var tujuan = dataTujuan[index];
+        var indexRemove = index;
+      }
+    }
+    start = tujuan.location
+    dataTujuan.splice(indexRemove, 1)
+    console.log(tujuan.tempat)
+    // var lamaPerjalanan = await getJarak(start, tujuan[index].location);
+    // //jamSampai = jam mulai berwisata
+    // var jamSampai = await hitungJam(
+    //   jamBerangkat,
+    //   lamaPerjalanan.rows[0].elements[0].duration.text
+    // );
+
+    // itinerary.push({
+    //   waktu: jamBerangkat + " - " + jamSampai,
+    //   keterangan: keterangan + tujuan[index].tempat,
+    //   status: "-"
+    // })
+
+    // var waktuBerkunjung = jamSampai + " - " + await hitungJam(jamSampai, "90 mins")
+
+    // itinerary.push({
+    //   waktu: waktuBerkunjung,
+    //   keterangan: "Liburan di " + tujuan[index].tempat,
+    //   kategori: tujuan[index].kategori,
+    //   status: await getStatusBuka(tujuan[index].jam_buka, waktuBerkunjung, tanggalBerkunjung),
+    //   cuaca: await getCuaca(jamSampai, tujuan[index].location, tanggalBerkunjung)
+    // })
+
+    // keterangan = "Perjalanan dari " + tujuan[index].tempat + " menuju ";
+    // jamBerangkat = await hitungJam(jamSampai, "90 mins")
+    jumlahTujuan++
+    
   }
+
+  // console.log(itinerary);
+}
+
+async function cekStatus(tujuan, waktuBerkunjung, tanggalBerkunjung) {
+
+  var status = {
+    buka: await getStatusBuka(tujuan.jam_buka, waktuBerkunjung, tanggalBerkunjung),
+    cuaca: await getCuaca(waktuBerkunjung, tujuan.location, tanggalBerkunjung)
+  };
+
+  console.log(status);
+
 }
 
 function hitungJam(jam, durasi) {
+  //jam => 08:00
+  //durasi -> 40 mins, 1 hour 5 mins
   jam = jam.split(":");
   durasi = durasi.split(" ");
 
@@ -248,8 +308,9 @@ function hitungJam(jam, durasi) {
   return hasil.text;
 }
 
-function getStatus(data, waktuBerkunjung, tanggalBerkunjung) {
+function getStatusBuka(data, waktuBerkunjung, tanggalBerkunjung) {
   //format waktu berkunjung --> "15:00 - 18:30"
+  // data --> data jam_buka
 
   var d = new Date(tanggalBerkunjung);
   var day = d.getDay();
@@ -292,4 +353,62 @@ function getStatus(data, waktuBerkunjung, tanggalBerkunjung) {
     var status = "Buka";
   }
   return status;
+}
+
+async function getCuaca(jamBerkunjung, location, tanggalBerkunjung) {
+  //JamBerkunjung -> "08:00" ;
+  var key = "81009d732d26d0e2ca070742855c6ad8";
+
+  tanggalBerkunjung = formatDate(tanggalBerkunjung);
+  jamBerkunjung = jamBerkunjung.split(":");
+  jamBerkunjung[0] = parseInt(jamBerkunjung);
+
+  var options = {
+    uri:
+      "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+      location.latitude +
+      "&lon=" +
+      location.longitude +
+      "&appid=" +
+      key,
+    method: "GET",
+    json: true,
+  };
+
+  var dataCuaca = await request2(options);
+
+  var cuaca = "-";
+  dataCuaca.list.forEach(function (item) {
+    var x = item.dt_txt.split(" ");
+    x[1] = x[1].split(":");
+    var tanggal = x[0];
+    var jam = parseInt(x[1][0]);
+    var jam2 = jam + 3;
+    if (tanggalBerkunjung == tanggal) {
+      if (jam == jamBerkunjung[0]) {
+        console.log("cocok");
+        cuaca = item.weather[0].main;
+      } else if (jam < jamBerkunjung[0] && jam + 4 > jamBerkunjung[0]) {
+        cuaca = item.weather[0].main;
+      }
+    }
+    // console.log(tanggalBerkunjung + " & " + tanggal);
+    // console.log(jamBerkunjung[0] + " & " + jam);
+  });
+
+  // console.log(cuaca);
+
+  return cuaca;
+}
+
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
 }
