@@ -266,7 +266,6 @@ function cekStatus(data, waktu){
             var today = key;
         }
     }
-    // console.log(today);
 
     for(var hari in data){
         if (hari == today) {
