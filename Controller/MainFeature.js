@@ -13,8 +13,8 @@ exports.index = async function (req, res) {
   );
 
   var tanggalWisata = {
-    mulai: "6/6/2020",
-    akhir: "06/7/2020",
+    mulai: "6/16/2020",
+    akhir: "6/18/2020",
   };
 
   var userLocation = {
@@ -23,7 +23,7 @@ exports.index = async function (req, res) {
   };
 
   var userKategori = ["Museum", "Rekreasi Air", "Taman Hiburan"];
-  var tujuanWisata = await getTujuanWisata(
+  let tujuanWisata = await getTujuanWisata(
     userKategori,
     userLocation,
     tanggalWisata
@@ -31,6 +31,12 @@ exports.index = async function (req, res) {
   tujuanWisata = await sortSentiment(tujuanWisata);
 
   var itinerary = await setItinerary(tujuanWisata[0], userLocation, tanggalWisata.mulai);
+
+  // tujuanWisata = await getTujuanWisata(
+  //   userKategori,
+  //   userLocation,
+  //   tanggalWisata
+  // );
 
   response.ok(tujuanWisata[0], res);
 };
@@ -123,6 +129,7 @@ async function convertMilKilo(mil) {
 
 async function bagiHari(tujuan, tanggalWisata) {
   var jumlahHari = await getJumlahHari(tanggalWisata);
+  console.log(jumlahHari)
   var i = 0;
   var tujuanBaru = [];
 
@@ -169,7 +176,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
   
   var nilaiJarak = 0;
 
-  var cadangan = dataTujuan.splice(4)
+  // var cadangan = dataTujuan.splice(4)
 
   while(jumlahTujuan != 5) {
     var jarakTerkecil = 999;
@@ -181,11 +188,12 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
       if (nilaiJarak < jarakTerkecil) {
         jarakTerkecil = nilaiJarak
         var tujuan = dataTujuan[index];
-        var indexRemove = index;
+        var indexRemove = dataTujuan[index].tempat;
       }
     }
     start = tujuan.location
-    dataTujuan.splice(indexRemove, 1)
+    // dataTujuan.splice(indexRemove, 1)
+    dataTujuan = dataTujuan.filter(item => item.tempat !== indexRemove)
     var lamaPerjalanan = await getJarak(start, tujuan.location);
     //jamSampai = jam mulai berwisata
     var jamSampai = await hitungJam(
@@ -332,7 +340,12 @@ function getStatusBuka(data, waktuBerkunjung, tanggalBerkunjung) {
 
   for (var hari in data) {
     if (hari == day) {
-      var jam_buka = data[hari];
+      if(data[hari] == "Buka 24 jam"){
+        var jam_buka = "00:00 - 23:59";
+      }
+      else {
+        var jam_buka = data[hari];
+      }
     }
   }
 
