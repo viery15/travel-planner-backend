@@ -14,7 +14,7 @@ exports.index = async function (req, res) {
 
   var tanggalWisata = {
     mulai: "6/8/2020",
-    akhir: "6/18/2020",
+    akhir: "6/9/2020",
   };
 
   var userLocation = {
