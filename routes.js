@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = function(app) {
-    var main = require('./controller/main');
-    var crawler = require('./controller/crawler');
-    var MainFeature = require('./controller/MainFeature');
+    var main = require('./Controller/main');
+    var crawler = require('./Controller/crawler');
+    var MainFeature = require('./Controller/MainFeature');
 
     app.route('/')
         .post(main.main);
