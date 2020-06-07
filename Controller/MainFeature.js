@@ -13,7 +13,7 @@ exports.index = async function (req, res) {
   );
 
   var tanggalWisata = {
-    mulai: "6/16/2020",
+    mulai: "6/8/2020",
     akhir: "6/18/2020",
   };
 
@@ -30,15 +30,18 @@ exports.index = async function (req, res) {
   );
   tujuanWisata = await sortSentiment(tujuanWisata);
 
-  var itinerary = await setItinerary(tujuanWisata[0], userLocation, tanggalWisata.mulai);
+  var coords = {
+    latitude: "-7.958116500000001",
+    longitude: "112.6203085"
+  }
 
-  // tujuanWisata = await getTujuanWisata(
-  //   userKategori,
-  //   userLocation,
-  //   tanggalWisata
-  // );
+  var itinerary = []
+  for (let index = 0; index < tujuanWisata.length; index++) {
+    var result = await setItinerary(tujuanWisata[index], userLocation, tanggalWisata.mulai);
+    itinerary.push(result)
+  }
 
-  response.ok(tujuanWisata[0], res);
+  response.ok(itinerary, res);
 };
 
 async function getTujuanWisata(kategori, userLocation, tanggalWisata) {
@@ -129,7 +132,6 @@ async function convertMilKilo(mil) {
 
 async function bagiHari(tujuan, tanggalWisata) {
   var jumlahHari = await getJumlahHari(tanggalWisata);
-  console.log(jumlahHari)
   var i = 0;
   var tujuanBaru = [];
 
@@ -191,10 +193,10 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         var indexRemove = dataTujuan[index].tempat;
       }
     }
-    start = tujuan.location
-    // dataTujuan.splice(indexRemove, 1)
+    
     dataTujuan = dataTujuan.filter(item => item.tempat !== indexRemove)
     var lamaPerjalanan = await getJarak(start, tujuan.location);
+    console.log(lamaPerjalanan)
     //jamSampai = jam mulai berwisata
     var jamSampai = await hitungJam(
       jamBerangkat,
@@ -220,10 +222,11 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
     keterangan = "Perjalanan dari " + tujuan.tempat + " menuju ";
     jamBerangkat = await hitungJam(jamSampai, "90 mins")
     jumlahTujuan++
-    
+    start = tujuan.location
   }
 
-  console.log(itinerary);
+  // console.log(itinerary);
+  return itinerary
 }
 
 async function cekStatus(tujuan, waktuBerkunjung, tanggalBerkunjung) {
