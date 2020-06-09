@@ -6,34 +6,32 @@ const request2 = require("request-promise");
 const key = "AIzaSyBAnpBN3XcUxdUV56dXxTfuhHBvEySitlY";
 
 exports.index = async function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
 
   var tanggalWisata = {
-    mulai: "6/8/2020",
-    akhir: "6/9/2020",
+    mulai: req.body.tanggalMulai,
+    akhir: req.body.tanggalAkhir, //"6/9/2020"
   };
-
+  
+  // var userLocation = {
+  //   latitude: "-7.942637178081287",
+  //   longitude: "112.70264024097918",
+  // };
   var userLocation = {
-    latitude: "-7.942637178081287",
-    longitude: "112.70264024097918",
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
   };
 
-  var userKategori = ["Museum", "Rekreasi Air", "Taman Hiburan"];
+  var userKategori = req.body.kategori;
+  
   let tujuanWisata = await getTujuanWisata(
     userKategori,
     userLocation,
     tanggalWisata
   );
-  tujuanWisata = await sortSentiment(tujuanWisata);
 
-  var coords = {
-    latitude: "-7.958116500000001",
-    longitude: "112.6203085"
-  }
+  tujuanWisata = await sortSentiment(tujuanWisata);
 
   var itinerary = []
   for (let index = 0; index < tujuanWisata.length; index++) {
@@ -47,8 +45,9 @@ exports.index = async function (req, res) {
 async function getTujuanWisata(kategori, userLocation, tanggalWisata) {
   var tujuan = await getByKategori(kategori);
   tujuan = await eliminasiJarak(tujuan, userLocation);
+  console.log(tujuan)
   tujuan = await bagiHari(tujuan, tanggalWisata);
-
+  
   return tujuan;
 }
 
@@ -196,7 +195,6 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
     
     dataTujuan = dataTujuan.filter(item => item.tempat !== indexRemove)
     var lamaPerjalanan = await getJarak(start, tujuan.location);
-    console.log(lamaPerjalanan)
     //jamSampai = jam mulai berwisata
     var jamSampai = await hitungJam(
       jamBerangkat,
@@ -236,7 +234,6 @@ async function cekStatus(tujuan, waktuBerkunjung, tanggalBerkunjung) {
     cuaca: await getCuaca(waktuBerkunjung, tujuan.location, tanggalBerkunjung)
   };
 
-  console.log(status);
 
 }
 
