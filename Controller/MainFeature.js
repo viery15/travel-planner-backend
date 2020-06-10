@@ -45,7 +45,6 @@ exports.index = async function (req, res) {
 async function getTujuanWisata(kategori, userLocation, tanggalWisata) {
   var tujuan = await getByKategori(kategori);
   tujuan = await eliminasiJarak(tujuan, userLocation);
-  console.log(tujuan)
   tujuan = await bagiHari(tujuan, tanggalWisata);
   
   return tujuan;
