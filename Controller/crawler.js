@@ -22,6 +22,7 @@ exports.index = async function(req, res) {
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
+                '--disable-extensions'
               ],
         });
         const page = await browser.newPage();
@@ -45,13 +46,14 @@ exports.index = async function(req, res) {
                 jam_buka[hari[i].innerText] = jam[i].innerText;
             }
             
-            var alamat = informasi[2].innerText;
-            alamat = alamat.split(",");
+            var alamatLengkap = document.querySelectorAll("div.ugiz4pqJLAG__primary-text.gm2-body-2")[0].innerText;
+
+            alamat = alamatLengkap.split(",");
             var kota = alamat[alamat.length - 2];
 
             let data = {
                 "tempat" : tempat[0].innerText,
-                "alamat" : informasi[2].innerText,
+                "alamat" : alamatLengkap,
                 "kota" : kota,
                 "jam_buka" : jam_buka,
             }

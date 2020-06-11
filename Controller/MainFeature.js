@@ -25,6 +25,11 @@ exports.index = async function (req, res) {
 
   var userKategori = req.body.kategori;
   
+  if(!Array.isArray(userKategori)){
+    userKategori = [];
+    userKategori.push(req.body.kategori)
+  }
+  
   let tujuanWisata = await getTujuanWisata(
     userKategori,
     userLocation,
@@ -178,7 +183,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
 
   // var cadangan = dataTujuan.splice(4)
 
-  while(jumlahTujuan != 5) {
+  while(jumlahTujuan != 5 && dataTujuan.length != 0) {
     var jarakTerkecil = 999;
     for (let index = 0; index < dataTujuan.length; index++) {
       
