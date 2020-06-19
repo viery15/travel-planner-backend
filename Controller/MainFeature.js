@@ -217,6 +217,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
       waktu: waktuBerkunjung,
       keterangan: "Liburan di " + tujuan.tempat,
       kategori: tujuan.kategori,
+      location: tujuan.location,
       status: await getStatusBuka(tujuan.jam_buka, waktuBerkunjung, tanggalBerkunjung),
       cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung)
     })
@@ -394,22 +395,25 @@ async function getCuaca(jamBerkunjung, location, tanggalBerkunjung) {
   var dataCuaca = await request2(options);
 
   var cuaca = "-";
-  dataCuaca.list.forEach(function (item) {
-    var x = item.dt_txt.split(" ");
-    x[1] = x[1].split(":");
-    var tanggal = x[0];
-    var jam = parseInt(x[1][0]);
-    var jam2 = jam + 3;
-    if (tanggalBerkunjung == tanggal) {
-      if (jam == jamBerkunjung[0]) {
-        cuaca = item.weather[0].main;
-      } else if (jam < jamBerkunjung[0] && jam + 4 > jamBerkunjung[0]) {
-        cuaca = item.weather[0].main;
+  if (dataCuaca.list != undefined) {
+    dataCuaca.list.forEach(function (item) {
+      var x = item.dt_txt.split(" ");
+      x[1] = x[1].split(":");
+      var tanggal = x[0];
+      var jam = parseInt(x[1][0]);
+      var jam2 = jam + 3;
+      if (tanggalBerkunjung == tanggal) {
+        if (jam == jamBerkunjung[0]) {
+          cuaca = item.weather[0].main;
+        } else if (jam < jamBerkunjung[0] && jam + 4 > jamBerkunjung[0]) {
+          cuaca = item.weather[0].main;
+        }
       }
-    }
-    // console.log(tanggalBerkunjung + " & " + tanggal);
-    // console.log(jamBerkunjung[0] + " & " + jam);
-  });
+      // console.log(tanggalBerkunjung + " & " + tanggal);
+      // console.log(jamBerkunjung[0] + " & " + jam);
+    });
+  }
+  
 
   // console.log(cuaca);
 
