@@ -3,6 +3,7 @@
 const response = require("./../res");
 const FinalData = require("./../models/final_data");
 const request2 = require("request-promise");
+const { exists } = require("./../models/final_data");
 const key = "AIzaSyBAnpBN3XcUxdUV56dXxTfuhHBvEySitlY";
 
 exports.index = async function (req, res) {
@@ -11,7 +12,7 @@ exports.index = async function (req, res) {
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   ); // If needed
-  
+
   var tanggalWisata = {
     mulai: req.body.tanggalMulai,
     akhir: req.body.tanggalAkhir, //"6/9/2020"
@@ -181,65 +182,103 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
   var keterangan = "Perjalanan dari lokasi anda menuju ";
   var itinerary = [];
   var jumlahTujuan = 1;
-
   var nilaiJarak = 0;
 
-  // var cadangan = dataTujuan.splice(4)
-
-  while (jumlahTujuan != 5 && dataTujuan.length != 0) {
+  var memenuhi = true
+  while (jumlahTujuan != 7 && dataTujuan.length != 0 && memenuhi) {
     var jarakTerkecil = 999;
+    var jmlTutup = 0;
     for (let index = 0; index < dataTujuan.length; index++) {
+      if (jmlTutup == dataTujuan.length) {
+        console.log("mandek");
+        break;
+      }
       var jarak = await getJarak(start, dataTujuan[index].location);
       nilaiJarak = parseFloat(
         jarak.rows[0].elements[0].distance.text.split(" ")[0]
       );
 
       if (nilaiJarak < jarakTerkecil) {
+        var lamaPerjalanan = await getJarak(start, dataTujuan[index].location);
+
+        var jamSampai = await hitungJam(
+          jamBerangkat,
+          lamaPerjalanan.rows[0].elements[0].duration.text
+        );
+
+        var waktuBerkunjung =
+          jamSampai + " - " + (await hitungJam(jamSampai, "90 mins"));
+
+        var statusBuka = await getStatusBuka(
+          dataTujuan[index].jam_buka,
+          waktuBerkunjung,
+          tanggalBerkunjung
+        );
+
+        if (statusBuka == "Tutup") {
+          console.log("tutup woy");
+          jmlTutup++;
+          continue;
+        }
         jarakTerkecil = nilaiJarak;
-        var tujuan = dataTujuan[index];
         var indexRemove = dataTujuan[index].tempat;
+        var tujuan = dataTujuan[index];
       }
     }
 
-    dataTujuan = dataTujuan.filter((item) => item.tempat !== indexRemove);
-    var lamaPerjalanan = await getJarak(start, tujuan.location);
-    //jamSampai = jam mulai berwisata
-    var jamSampai = await hitungJam(
-      jamBerangkat,
-      lamaPerjalanan.rows[0].elements[0].duration.text
-    );
+    if (tujuan.tempat != undefined) {
+      dataTujuan = dataTujuan.filter((item) => item.tempat !== indexRemove);
+      console.log("ini tujuan " + tujuan.tempat);
+      var lamaPerjalanan = await getJarak(start, tujuan.location);
+      //jamSampai = jam mulai berwisata
+      var jamSampai = await hitungJam(
+        jamBerangkat,
+        lamaPerjalanan.rows[0].elements[0].duration.text
+      );
 
-    itinerary.push({
-      waktu: jamBerangkat + " - " + jamSampai,
-      keterangan: keterangan + tujuan.tempat,
-      status: "-",
-    });
+      var waktuBerkunjung =
+        jamSampai + " - " + (await hitungJam(jamSampai, "90 mins"));
 
-    var waktuBerkunjung =
-      jamSampai + " - " + (await hitungJam(jamSampai, "90 mins"));
-
-    var alamat = await getAddress(tujuan.location.latitude, tujuan.location.longitude)
-
-    itinerary.push({
-      nama: tujuan.tempat,
-      waktu: waktuBerkunjung,
-      alamat: alamat.results[0].formatted_address,
-      keterangan: "Liburan di " + tujuan.tempat,
-      kategori: tujuan.kategori,
-      location: tujuan.location,
-      sentimentScore: tujuan.sentiment_score,
-      status: await getStatusBuka(
+      var statusBuka = await getStatusBuka(
         tujuan.jam_buka,
         waktuBerkunjung,
         tanggalBerkunjung
-      ),
-      cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung),
-    });
+      );
 
-    keterangan = "Perjalanan dari " + tujuan.tempat + " menuju ";
-    jamBerangkat = await hitungJam(jamSampai, "90 mins");
-    jumlahTujuan++;
-    start = tujuan.location;
+      itinerary.push({
+        waktu: jamBerangkat + " - " + jamSampai,
+        keterangan: keterangan + tujuan.tempat,
+        status: "-",
+      });
+
+      var alamat = await getAddress(
+        tujuan.location.latitude,
+        tujuan.location.longitude
+      );
+
+      itinerary.push({
+        nama: tujuan.tempat,
+        waktu: waktuBerkunjung,
+        jamBuka: tujuan.jam_buka,
+        alamat: alamat.results[0].formatted_address,
+        keterangan: "Liburan di " + tujuan.tempat,
+        kategori: tujuan.kategori,
+        location: tujuan.location,
+        sentimentScore: tujuan.sentiment_score,
+        status: statusBuka,
+        cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung),
+      });
+
+      keterangan = "Perjalanan dari " + tujuan.tempat + " menuju ";
+      jamBerangkat = await hitungJam(jamSampai, "90 mins");
+      jumlahTujuan++;
+      start = tujuan.location;
+      tujuan = "";
+    }
+
+    else {
+      memenuhi = false
+    }
   }
 
   return itinerary;
