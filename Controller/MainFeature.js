@@ -216,7 +216,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         );
 
         if (statusBuka == "Tutup") {
-          console.log("tutup woy");
+          // console.log("tutup woy");
           jmlTutup++;
           continue;
         }
@@ -226,9 +226,9 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
       }
     }
 
-    if (tujuan.tempat != undefined) {
+    if (tujuan != undefined) {
       dataTujuan = dataTujuan.filter((item) => item.tempat !== indexRemove);
-      console.log("ini tujuan " + tujuan.tempat);
+      // console.log("ini tujuan " + tujuan.tempat);
       var lamaPerjalanan = await getJarak(start, tujuan.location);
       //jamSampai = jam mulai berwisata
       var jamSampai = await hitungJam(
