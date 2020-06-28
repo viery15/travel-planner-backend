@@ -188,6 +188,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
   while (jumlahTujuan != 7 && dataTujuan.length != 0 && memenuhi) {
     var jarakTerkecil = 999;
     var jmlTutup = 0;
+    var tujuan = "";
     for (let index = 0; index < dataTujuan.length; index++) {
       if (jmlTutup == dataTujuan.length) {
         console.log("mandek");
@@ -222,11 +223,11 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         }
         jarakTerkecil = nilaiJarak;
         var indexRemove = dataTujuan[index].tempat;
-        var tujuan = dataTujuan[index];
+        tujuan = dataTujuan[index];
       }
     }
 
-    if (tujuan != undefined) {
+    if (tujuan != "") {
       dataTujuan = dataTujuan.filter((item) => item.tempat !== indexRemove);
       // console.log("ini tujuan " + tujuan.tempat);
       var lamaPerjalanan = await getJarak(start, tujuan.location);
