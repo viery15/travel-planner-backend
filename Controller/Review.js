@@ -1,9 +1,9 @@
 "use strict";
 
 const response = require("./../res");
-const ReviewData = require("./../models/review_data");
+const FinalData = require("./../models/final_data");
 const request2 = require("request-promise");
-const { exists } = require("./../models/review_data");
+const { exists } = require("./../models/final_data");
 
 exports.index = async function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,11 +12,14 @@ exports.index = async function (req, res) {
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
 
-  var data = await getAll();
+  var id = req.body.id;
+
+  var data = await getById(id);
 
   response.ok(data, res);
+
 };
 
-function getAll() {
-  return ReviewData.distinct("informasi").exec();
+function getById(id){
+    return FinalData.find( {_id : id} ).exec();
 }

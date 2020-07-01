@@ -11,7 +11,7 @@ exports.index = async function (req, res) {
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  ); // If needed
+  );
 
   var tanggalWisata = {
     mulai: req.body.tanggalMulai,
@@ -184,7 +184,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
   var jumlahTujuan = 1;
   var nilaiJarak = 0;
 
-  var memenuhi = true
+  var memenuhi = true;
   while (jumlahTujuan != 7 && dataTujuan.length != 0 && memenuhi) {
     var jarakTerkecil = 999;
     var jmlTutup = 0;
@@ -194,7 +194,9 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         console.log("mandek");
         break;
       }
+
       var jarak = await getJarak(start, dataTujuan[index].location);
+
       nilaiJarak = parseFloat(
         jarak.rows[0].elements[0].distance.text.split(" ")[0]
       );
@@ -226,6 +228,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         tujuan = dataTujuan[index];
       }
     }
+    // console.log(tujuan.tempat);
 
     if (tujuan != "") {
       dataTujuan = dataTujuan.filter((item) => item.tempat !== indexRemove);
@@ -257,6 +260,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         tujuan.location.latitude,
         tujuan.location.longitude
       );
+      // console.log(itinerary)
 
       itinerary.push({
         nama: tujuan.tempat,
@@ -269,33 +273,22 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         sentimentScore: tujuan.sentiment_score,
         url: tujuan.url,
         status: statusBuka,
+        // cuaca: "-",
         cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung),
       });
+      // console.log("itinerary masuk")
 
       keterangan = "Perjalanan dari " + tujuan.tempat + " menuju ";
       jamBerangkat = await hitungJam(jamSampai, "90 mins");
       jumlahTujuan++;
       start = tujuan.location;
       tujuan = "";
-    }
-
-    else {
-      memenuhi = false
+    } else {
+      memenuhi = false;
     }
   }
 
   return itinerary;
-}
-
-async function cekStatus(tujuan, waktuBerkunjung, tanggalBerkunjung) {
-  var status = {
-    buka: await getStatusBuka(
-      tujuan.jam_buka,
-      waktuBerkunjung,
-      tanggalBerkunjung
-    ),
-    cuaca: await getCuaca(waktuBerkunjung, tujuan.location, tanggalBerkunjung),
-  };
 }
 
 function hitungJam(jam, durasi) {
@@ -435,41 +428,44 @@ async function getCuaca(jamBerkunjung, location, tanggalBerkunjung) {
   jamBerkunjung = jamBerkunjung.split(":");
   jamBerkunjung[0] = parseInt(jamBerkunjung);
 
-  var options = {
-    uri:
-      "http://api.openweathermap.org/data/2.5/forecast?lat=" +
-      location.latitude +
-      "&lon=" +
-      location.longitude +
-      "&appid=" +
-      key,
-    method: "GET",
-    json: true,
-  };
+  // http://api.openweathermap.org/data/2.5/forecast?lat=-7.942637178081287&lon=112.70264024097918&appid=81009d732d26d0e2ca070742855c6ad8
 
-  var dataCuaca = await request2(options);
+  try {
+    var options = {
+      uri:
+        "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+        location.latitude +
+        "&lon=" +
+        location.longitude +
+        "&appid=" +
+        key,
+      method: "GET",
+      json: true,
+    };
 
-  var cuaca = "-";
-  if (dataCuaca.list != undefined) {
-    dataCuaca.list.forEach(function (item) {
-      var x = item.dt_txt.split(" ");
-      x[1] = x[1].split(":");
-      var tanggal = x[0];
-      var jam = parseInt(x[1][0]);
-      var jam2 = jam + 3;
-      if (tanggalBerkunjung == tanggal) {
-        if (jam == jamBerkunjung[0]) {
-          cuaca = item.weather[0].main;
-        } else if (jam < jamBerkunjung[0] && jam + 4 > jamBerkunjung[0]) {
-          cuaca = item.weather[0].main;
+    var dataCuaca = await request2(options);
+
+    var cuaca = "-";
+    if (dataCuaca.list != undefined) {
+      dataCuaca.list.forEach(function (item) {
+        var x = item.dt_txt.split(" ");
+        x[1] = x[1].split(":");
+        var tanggal = x[0];
+        var jam = parseInt(x[1][0]);
+        var jam2 = jam + 3;
+        if (tanggalBerkunjung == tanggal) {
+          if (jam == jamBerkunjung[0]) {
+            cuaca = item.weather[0].main;
+          } else if (jam < jamBerkunjung[0] && jam + 4 > jamBerkunjung[0]) {
+            cuaca = item.weather[0].main;
+          }
         }
-      }
-      // console.log(tanggalBerkunjung + " & " + tanggal);
-      // console.log(jamBerkunjung[0] + " & " + jam);
-    });
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+    var cuaca = "-";
   }
-
-  // console.log(cuaca);
 
   return cuaca;
 }
