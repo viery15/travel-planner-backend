@@ -216,7 +216,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
           tanggalBerkunjung
         );
 
-        if (statusBuka == "Tutup") {
+        if (statusBuka == "Tutup" || statusBuka == undefined) {
           // console.log("tutup woy");
           jmlTutup++;
           continue;
@@ -245,6 +245,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         waktuBerkunjung,
         tanggalBerkunjung
       );
+      // console.log(tujuan.tempat + " - " + statusBuka)
 
       itinerary.push({
         waktu: jamBerangkat + " - " + jamSampai,
@@ -266,6 +267,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         kategori: tujuan.kategori,
         location: tujuan.location,
         sentimentScore: tujuan.sentiment_score,
+        url: tujuan.url,
         status: statusBuka,
         cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung),
       });

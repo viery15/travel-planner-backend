@@ -8,6 +8,7 @@ const final_dataSchema = mongoose.Schema({
     jam_buka: Object,
     kategori: Array,
     location: Object,
+    reviews: Array,
     sentiment_score: String,
     url: String
 });
