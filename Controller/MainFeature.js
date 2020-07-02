@@ -180,6 +180,10 @@ function compare(a, b) {
 async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
   var jamBerangkat = "08:00";
   var keterangan = "Perjalanan dari lokasi anda menuju ";
+  var keteranganPerjalanan = {
+    start: start.latitude + "," + start.longitude,
+    finish: "",
+  };
   var itinerary = [];
   var jumlahTujuan = 1;
   var nilaiJarak = 0;
@@ -191,7 +195,6 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
     var tujuan = "";
     for (let index = 0; index < dataTujuan.length; index++) {
       if (jmlTutup == dataTujuan.length) {
-        console.log("mandek");
         break;
       }
 
@@ -248,12 +251,17 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         waktuBerkunjung,
         tanggalBerkunjung
       );
-      // console.log(tujuan.tempat + " - " + statusBuka)
+
+      keteranganPerjalanan.finish = tujuan.tempat;
+
+      // https://www.google.com/maps/dir/?api=1&origin=-7.942637178081287,112.70264024097918&destination=De%20Rumah%20Playground
+      // "https://www.google.com/maps/dir/?api=1&origin=112.6967924,112.6967924&destination=Kampoeng Wisata Keramik Dinoyo"
 
       itinerary.push({
         waktu: jamBerangkat + " - " + jamSampai,
         keterangan: keterangan + tujuan.tempat,
         status: "-",
+        rute: await linkMap(keteranganPerjalanan),
       });
 
       var alamat = await getAddress(
@@ -263,6 +271,7 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
       // console.log(itinerary)
 
       itinerary.push({
+        _id: tujuan._id,
         nama: tujuan.tempat,
         waktu: waktuBerkunjung,
         jamBuka: tujuan.jam_buka,
@@ -273,12 +282,14 @@ async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
         sentimentScore: tujuan.sentiment_score,
         url: tujuan.url,
         status: statusBuka,
-        // cuaca: "-",
         cuaca: await getCuaca(jamSampai, tujuan.location, tanggalBerkunjung),
       });
-      // console.log("itinerary masuk")
 
       keterangan = "Perjalanan dari " + tujuan.tempat + " menuju ";
+      keteranganPerjalanan = {
+        start: tujuan.tempat,
+        finish: "",
+      };
       jamBerangkat = await hitungJam(jamSampai, "90 mins");
       jumlahTujuan++;
       start = tujuan.location;
@@ -496,4 +507,14 @@ function getAddress(latitude, longitude) {
   };
 
   return request2(options);
+}
+
+function linkMap(keterangan) {
+  var link =
+    "https://www.google.com/maps/dir/?api=1&origin=" +
+    keterangan.start +
+    "&destination=" +
+    keterangan.finish;
+
+  return link;
 }
