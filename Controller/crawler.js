@@ -228,8 +228,8 @@ exports.index = async function (req, res) {
         jam_buka: responseData.informasi.jam_buka,
         kategori: responseData.kategori,
         location: responseData.location,
-        review: reviews,
-        sentiment_score: score_review,
+        review: score_review.reviews,
+        sentiment_score: score_review.total_score,
         url: url,
       };
 
