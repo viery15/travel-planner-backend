@@ -17,5 +17,7 @@ module.exports = function (app) {
 
   app.route("/Wisata").get(Wisata.index);
 
+  app.route("/Wisata/refresh").post(Wisata.refresh);
+
   app.route("/Review").post(Review.index);
 };
