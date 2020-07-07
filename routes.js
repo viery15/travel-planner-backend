@@ -6,6 +6,7 @@ module.exports = function (app) {
   var MainFeature = require("./Controller/MainFeature");
   var Wisata = require("./Controller/Wisata");
   var Review = require("./Controller/Review");
+  var ManualItinerary = require("./Controller/ManualItinerary");
 
   app.route("/").post(main.main);
 
@@ -20,4 +21,8 @@ module.exports = function (app) {
   app.route("/Wisata/refresh").post(Wisata.refresh);
 
   app.route("/Review").post(Review.index);
+
+  app.route("/ManualItinerary").post(ManualItinerary.index);
+  app.route("/ManualItinerary/tujuan").post(ManualItinerary.tujuan);
+
 };
