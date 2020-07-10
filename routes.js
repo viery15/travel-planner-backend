@@ -14,6 +14,8 @@ module.exports = function (app) {
 
   app.route("/crawler").post(crawler.index);
 
+  app.route("/crawler/json").post(crawler.byFile);
+
   app.route("/MainFeature").post(MainFeature.index);
 
   app.route("/Wisata").get(Wisata.index);

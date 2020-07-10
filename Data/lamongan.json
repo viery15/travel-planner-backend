@@ -1,0 +1,29 @@
+[
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+Bahari+Lamongan/@-6.8963846,112.2508732,12z/data=!4m8!1m2!2m1!1swisata+lamongan!3m4!1s0x2e77c26babdce9c5:0xff08e6018081d10!8m2!3d-6.8655082!4d112.3599381",
+        "kategori" : [
+            "Taman Hiburan"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Maharani+Zoo+%26+Goa/@-6.8963846,112.2508732,12z/data=!4m8!1m2!2m1!1swisata+lamongan!3m4!1s0x2e77c269574a4f6b:0x51f14da4d9d4dd1!8m2!3d-6.8679018!4d112.3622011",
+        "kategori" : [
+            "Kebun Binatang"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/WISATA+AKAR+LANGIT+TRINIL+LAMONGAN/@-6.8963846,112.2508732,12z/data=!4m8!1m2!2m1!1swisata+lamongan!3m4!1s0x2e77ead51d6de14d:0xe42e2b02d6dce8ff!8m2!3d-6.9269311!4d112.2411571",
+        "kategori" : [
+            "Bukit",
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Sunan+Drajat+Special+Museum/@-7.0346315,112.2232178,11z/data=!4m8!1m2!2m1!1swisata+lamongan!3m4!1s0x2e77e829b6581153:0xde672ab4e7bb2a63!8m2!3d-6.8844412!4d112.3899248",
+        "kategori" : [
+            "Museum",
+            "Religi"
+        ]
+    }
+    
+]
