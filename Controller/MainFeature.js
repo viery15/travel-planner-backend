@@ -3,7 +3,9 @@
 const response = require("./../res");
 const FinalData = require("./../models/final_data");
 const request2 = require("request-promise");
-const { exists } = require("./../models/final_data");
+const {
+  exists
+} = require("./../models/final_data");
 const key = "AIzaSyBAnpBN3XcUxdUV56dXxTfuhHBvEySitlY";
 
 exports.index = async function (req, res) {
@@ -90,24 +92,29 @@ function getByKategori(kategori) {
 async function eliminasiJarak(tujuan, userLocation) {
   var tujuanBaru = [];
   for (let index = 0; index < tujuan.length; index++) {
+
     var dataJarak = await getJarak(userLocation, tujuan[index].location);
-    var jarak = await convertMilKilo(
-      dataJarak.rows[0].elements[0].distance.text
-    );
-    if (jarak < 40) {
-      tujuanBaru.push({
-        _id: tujuan[index]._id,
-        kategori: tujuan[index].kategori,
-        tempat: tujuan[index].tempat,
-        alamat: tujuan[index].alamat,
-        kota: tujuan[index].kota,
-        jam_buka: tujuan[index].jam_buka,
-        location: tujuan[index].location,
-        sentiment_score: tujuan[index].sentiment_score,
-        jarak: jarak,
-        url: tujuan[index].url,
-      });
+    // console.log(tujuan[index].tempat + " - " + dataJarak.rows[0].elements[0].distance);
+    if (dataJarak.rows[0].elements[0].distance != undefined) {
+      var jarak = await convertMilKilo(
+        dataJarak.rows[0].elements[0].distance.text
+      );
+      if (jarak < 40) {
+        tujuanBaru.push({
+          _id: tujuan[index]._id,
+          kategori: tujuan[index].kategori,
+          tempat: tujuan[index].tempat,
+          alamat: tujuan[index].alamat,
+          kota: tujuan[index].kota,
+          jam_buka: tujuan[index].jam_buka,
+          location: tujuan[index].location,
+          sentiment_score: tujuan[index].sentiment_score,
+          jarak: jarak,
+          url: tujuan[index].url,
+        });
+      }
     }
+
   }
 
   return tujuanBaru;
@@ -115,8 +122,7 @@ async function eliminasiJarak(tujuan, userLocation) {
 
 async function getJarak(start, finish) {
   var options = {
-    uri:
-      "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
+    uri: "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
       start.latitude +
       "," +
       start.longitude +
@@ -445,8 +451,7 @@ async function getCuaca(jamBerkunjung, location, tanggalBerkunjung) {
 
   try {
     var options = {
-      uri:
-        "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+      uri: "http://api.openweathermap.org/data/2.5/forecast?lat=" +
         location.latitude +
         "&lon=" +
         location.longitude +
@@ -497,8 +502,7 @@ function formatDate(date) {
 
 function getAddress(latitude, longitude) {
   var options = {
-    uri:
-      "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+    uri: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
       latitude +
       "," +
       longitude +
