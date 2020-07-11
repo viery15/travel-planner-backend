@@ -50,7 +50,7 @@
         ]
     },
     {
-        "url" : "google.com/maps/place/Bukit+Bunda/@-8.0831517,112.1136271,12z/data=!4m8!1m2!2m1!1swisata+blitar!3m4!1s0x2e78e9906c91d225:0xf50f281ece44b422!8m2!3d-8.1647063!4d112.1294709",
+        "url" : "https://www.google.com/maps/place/Bukit+Bunda/@-8.0831517,112.1136271,12z/data=!4m8!1m2!2m1!1swisata+blitar!3m4!1s0x2e78e9906c91d225:0xf50f281ece44b422!8m2!3d-8.1647063!4d112.1294709",
         "kategori" : [
             "Bukit"
         ]
@@ -73,12 +73,6 @@
         "kategori" : [
             "Museum",
             "Edukasi"
-        ]
-    },
-    {
-        "url" : "https://www.google.com/maps/place/Bukit+Teletubies/@-8.1510433,112.1092454,11z/data=!4m9!1m3!2m2!1swisata+blitar!6e1!3m4!1s0x2e788cb4973e2095:0x2e279fb481c5f581!8m2!3d-7.9588812!4d112.2401717",
-        "kategori" : [
-            "Bukit"
         ]
     },
     {
@@ -131,12 +125,6 @@
         ]
     },
     {
-        "url" : "https://www.google.com/maps/place/Arca+Warak/@-8.1453288,112.0774188,11z/data=!4m9!1m3!2m2!1swisata+blitar!6e1!3m4!1s0x2e78f2affcff412b:0x4c4987defd9a5c50!8m2!3d-8.0152207!4d112.2270433",
-        "kategori" : [
-            "Sejarah"
-        ]
-    },
-    {
         "url" : "https://www.google.com/maps/place/Taman+Idaman+Hati+Wlingi+Blitar/@-8.1453288,112.0774188,11z/data=!4m9!1m3!2m2!1swisata+blitar!6e1!3m4!1s0x2e7893e784227469:0x49713933837b5978!8m2!3d-8.081383!4d112.324369",
         "kategori" : [
             "Taman Kota"
@@ -158,12 +146,6 @@
     },
     {
         "url" : "https://www.google.com/maps/place/Pesanggrahan+Djojodigdan/@-8.1433471,112.1232627,11z/data=!4m9!1m3!2m2!1swisata+blitar!6e1!3m4!1s0x2e78ec0c5ba848f9:0xb405c7b567049f54!8m2!3d-8.1037846!4d112.1631234",
-        "kategori" : [
-            "Sejarah"
-        ]
-    },
-    {
-        "url" : "https://www.google.com/maps/place/Monumen+Trisula+%EA%A6%A9%EA%A6%BA%EA%A6%B4%EA%A6%A4%EA%A6%B8%EA%A6%A9%EA%A6%BA%EA%A6%A4%EA%A7%80%EA%A6%A0%EA%A6%BF%EA%A6%B6%EA%A6%B1%EA%A6%B8%EA%A6%AD/@-8.1433471,112.1232627,11z/data=!4m9!1m3!2m2!1swisata+blitar!6e1!3m4!1s0x2e78c36ad42f91a1:0x4508a7083e7c5a85!8m2!3d-8.2595122!4d112.0742377",
         "kategori" : [
             "Sejarah"
         ]

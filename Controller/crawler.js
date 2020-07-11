@@ -351,232 +351,240 @@ exports.byFile = async function (req, res) {
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
 
-  var dataInput = fs.readFileSync('./Data/blitar.json', 'utf8');
+  var dataInput = fs.readFileSync('./Data/mojokerto.json', 'utf8');
   dataInput = JSON.parse(dataInput);
   // console.log(dataInput[0]);
 
   (async () => {
     for (let indexReq = 0; indexReq < dataInput.length; indexReq++) {
-      var url = dataInput[indexReq].url;
-      const browser = await puppeteer.launch({
-        // headless: false,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--disable-extensions",
-        ],
-      });
-      const page = await browser.newPage();
 
-      await page.goto(url, {
-        waitUntil: "networkidle2",
-        timeout: 0,
-      });
+      try {
+        var url = dataInput[indexReq].url;
+        const browser = await puppeteer.launch({
+          // headless: false,
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-extensions",
+          ],
+        });
+        const page = await browser.newPage();
 
-      await page.waitForSelector(".widget-pane-link", {
-        visible: true,
-      });
+        await page.goto(url, {
+          waitUntil: "networkidle2",
+          timeout: 0,
+        });
 
-      const result = await page.evaluate(() => {
-        var informasi = document.querySelectorAll("span.widget-pane-link");
-        var tempat = document.getElementsByClassName(
-          "GLOBAL__gm2-headline-5 section-hero-header-title-title"
-        );
-        var hari = document.querySelectorAll("th > div:nth-child(1)");
-        var jam = document.querySelectorAll("td.lo7U087hsMA__row-data > ul > li");
-        var jam_buka = {};
-        for (let i = 0; i < 7; i++) {
-          jam_buka[hari[i].innerText] = jam[i].innerText;
-        }
+        await page.waitForSelector(".widget-pane-link", {
+          visible: true,
+        });
 
-        var alamatLengkap = document.querySelectorAll(
-          "div.ugiz4pqJLAG__primary-text.gm2-body-2"
-        )[0].innerText;
-
-        alamat = alamatLengkap.split(",");
-        var kota = alamat[alamat.length - 2];
-
-        let data = {
-          tempat: tempat[0].innerText,
-          alamat: alamatLengkap,
-          kota: kota,
-          jam_buka: jam_buka,
-        };
-        return data;
-      });
-
-      var kota_jatim = {
-        Surabaya: [" Surabaya City", " Kota SBY"],
-        Malang: [" Kota Malang", " Malang"],
-        Batu: [" Kota Batu", "Batu"],
-        Blitar: [" Kota Blitar", " Blitar", " Kabupaten Blitar"],
-        Kediri: [" Kota Kediri", " Kediri"],
-        Pacitan: [" Kabupaten Pacitan", " Kediri"],
-        Banyuwangi: [" Kabupaten Banyuwangi", " Banyuwangi"],
-        Lamongan: [" Kabupaten Lamongan", " Lamongan", "Kabupaten Lamongan"],
-      };
-
-      for (var key_kota in kota_jatim) {
-        for (let index = 0; index < kota_jatim[key_kota].length; index++) {
-          if (kota_jatim[key_kota][index] == result.kota) {
-            result.kota = key_kota;
+        const result = await page.evaluate(() => {
+          var informasi = document.querySelectorAll("span.widget-pane-link");
+          var tempat = document.getElementsByClassName(
+            "GLOBAL__gm2-headline-5 section-hero-header-title-title"
+          );
+          var hari = document.querySelectorAll("th > div:nth-child(1)");
+          var jam = document.querySelectorAll("td.lo7U087hsMA__row-data > ul > li");
+          var jam_buka = {};
+          for (let i = 0; i < 7; i++) {
+            jam_buka[hari[i].innerText] = jam[i].innerText;
           }
-        }
-      }
 
-      var status_tempat = await checkRedundan(result.tempat);
+          var alamatLengkap = document.querySelectorAll(
+            "div.ugiz4pqJLAG__primary-text.gm2-body-2"
+          )[0].innerText;
 
-      if (status_tempat == "exist") {
-        console.log("Data already exist\nCrawler Stopped");
+          alamat = alamatLengkap.split(",");
+          var kota = alamat[alamat.length - 2];
 
-        await browser.close();
-      } else {
-        console.log("informasi umum berhasil ditambahkan");
-        await page.waitForSelector(
-          "#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-layout.section-layout-justify-space-between.section-layout-vertically-center-content.section-layout-flex-vertical.section-layout-flex-horizontal > div.iRxY3GoUYUY__actionicon > div > button"
-        );
-        await page.click(
-          "#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-layout.section-layout-justify-space-between.section-layout-vertically-center-content.section-layout-flex-vertical.section-layout-flex-horizontal > div.iRxY3GoUYUY__actionicon > div > button"
-        );
-        await page.waitFor(5000);
+          let data = {
+            tempat: tempat[0].innerText,
+            alamat: alamatLengkap,
+            kota: kota,
+            jam_buka: jam_buka,
+          };
+          return data;
+        });
 
-        const scrollable_section = ".section-scrollbox";
-        await page.waitForSelector(".section-scrollbox");
+        var kota_jatim = {
+          Surabaya: [" Surabaya City", " Kota SBY"],
+          Malang: [" Kota Malang", " Malang"],
+          Batu: [" Kota Batu", " Batu"],
+          Blitar: [" Kota Blitar", " Blitar", " Kabupaten Blitar"],
+          Kediri: [" Kota Kediri", " Kediri"],
+          Pacitan: [" Kabupaten Pacitan", " Kediri"],
+          Banyuwangi: [" Kabupaten Banyuwangi", " Banyuwangi"],
+          Lamongan: [" Kabupaten Lamongan", " Lamongan", " Kabupaten Lamongan"],
+          Probolinggo: [" Probolinggo", " Kota Probolinggo", " Kabupaten Probolinggo"],
+          Mojokerto: [" Mojokerto", " Kota Mojokerto"],
+        };
 
-        var count2 = 0;
-        var count = 0;
-        var counts = 0;
-
-        for (let index = 0; index < 11; index++) {
-          counts = await page.evaluate(
-            ({
-              count,
-              count2
-            }) => {
-              const scrollableSection = document.querySelector(
-                ".section-scrollbox"
-              );
-
-              scrollableSection.scrollTop += 5000;
-              var count = (scrollableSection.scrollTop += 5000);
-
-              if (count > count2) {
-                count2 = count;
-              } else {
-                count2 = 0;
-              }
-
-              return {
-                count,
-                count2,
-              };
-            }, {
-              count,
-              count2
+        for (var key_kota in kota_jatim) {
+          for (let index = 0; index < kota_jatim[key_kota].length; index++) {
+            if (kota_jatim[key_kota][index] == result.kota) {
+              result.kota = key_kota;
             }
-          );
-
-          await page.waitFor(10000);
-
-          count = counts.count;
-          count2 = counts.count2;
+          }
         }
 
-        await page.evaluate(() => {
-          let detail_reviews = document.querySelectorAll(
-            ".section-expand-review"
-          );
+        var status_tempat = await checkRedundan(result.tempat);
 
-          var index = 0;
-          while (index < detail_reviews.length) {
-            detail_reviews[index].click();
-            console.log("index " + index + "clicked");
-            index++;
-          }
-          return {
-            detail_reviews,
-          };
-        });
+        if (status_tempat == "exist") {
+          console.log("Data already exist");
 
-        const result2 = await page.evaluate(() => {
-          var postReview = document.getElementsByClassName("section-review-text");
-          var reviews = [];
-          for (var i = 0; i < postReview.length; i++) {
-            reviews.push(postReview[i].innerText);
-          }
-
-          return {
-            reviews,
-          };
-        });
-
-        console.log("Review berhasil didapatkan");
-
-        var coor_loc = await getCoordinat(result.tempat);
-
-        var kategori = [];
-        if (Array.isArray(dataInput[indexReq].kategori)) {
-          kategori = dataInput[indexReq].kategori;
+          await browser.close();
         } else {
-          kategori.push(dataInput[indexReq].kategori);
-        }
+          console.log("informasi umum berhasil ditambahkan");
+          await page.waitForSelector(
+            "#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-layout.section-layout-justify-space-between.section-layout-vertically-center-content.section-layout-flex-vertical.section-layout-flex-horizontal > div.iRxY3GoUYUY__actionicon > div > button"
+          );
+          await page.click(
+            "#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-layout.section-layout-justify-space-between.section-layout-vertically-center-content.section-layout-flex-vertical.section-layout-flex-horizontal > div.iRxY3GoUYUY__actionicon > div > button"
+          );
+          await page.waitFor(5000);
 
-        var responseData = {
-          informasi: result,
-          kategori: kategori,
-          location: {
-            latitude: coor_loc.lat,
-            longitude: coor_loc.lng,
-          },
-          reviews: result2.reviews,
-        };
+          const scrollable_section = ".section-scrollbox";
+          await page.waitForSelector(".section-scrollbox");
 
-        responseData.reviews = responseData.reviews.filter(function (el) {
-          return el != "";
-        });
+          var count2 = 0;
+          var count = 0;
+          var counts = 0;
 
-        responseData.reviews.splice(100);
-        var reviews = responseData.reviews;
+          for (let index = 0; index < 11; index++) {
+            counts = await page.evaluate(
+              ({
+                count,
+                count2
+              }) => {
+                const scrollableSection = document.querySelector(
+                  ".section-scrollbox"
+                );
 
-        fs.writeFileSync(
-          "./Data Output/" + responseData.informasi.tempat + ".json",
-          JSON.stringify(responseData, null, 2)
-        );
+                scrollableSection.scrollTop += 5000;
+                var count = (scrollableSection.scrollTop += 5000);
 
-        var options = {
-          uri: "http://127.0.0.1/sentiment/",
-          method: "POST",
-          body: {
-            reviews: responseData.reviews,
-          },
-          json: true,
-        };
+                if (count > count2) {
+                  count2 = count;
+                } else {
+                  count2 = 0;
+                }
 
-        var score_review = await request2(options);
+                return {
+                  count,
+                  count2,
+                };
+              }, {
+                count,
+                count2
+              }
+            );
 
-        var finalData = {
-          tempat: responseData.informasi.tempat,
-          alamat: responseData.informasi.alamat,
-          kota: responseData.informasi.kota,
-          jam_buka: responseData.informasi.jam_buka,
-          kategori: responseData.kategori,
-          location: responseData.location,
-          review: score_review.reviews,
-          sentiment_score: score_review.total_score,
-          url: url,
-        };
+            await page.waitFor(10000);
 
-        MongoClient.connect(urlMongo, function (err, db) {
-          if (err) throw err;
-          db.collection("final_datas").insertOne(finalData, function (err, res) {
-            if (err) throw err;
-            console.log(finalData.tempat + " Berhasil ditambahkan");
-            db.close();
+            count = counts.count;
+            count2 = counts.count2;
+          }
+
+          await page.evaluate(() => {
+            let detail_reviews = document.querySelectorAll(
+              ".section-expand-review"
+            );
+
+            var index = 0;
+            while (index < detail_reviews.length) {
+              detail_reviews[index].click();
+              console.log("index " + index + "clicked");
+              index++;
+            }
+            return {
+              detail_reviews,
+            };
           });
-        });
 
-        await browser.close();
+          const result2 = await page.evaluate(() => {
+            var postReview = document.getElementsByClassName("section-review-text");
+            var reviews = [];
+            for (var i = 0; i < postReview.length; i++) {
+              reviews.push(postReview[i].innerText);
+            }
+
+            return {
+              reviews,
+            };
+          });
+
+          console.log("Review berhasil didapatkan");
+
+          var coor_loc = await getCoordinat(result.tempat);
+
+          var kategori = [];
+          if (Array.isArray(dataInput[indexReq].kategori)) {
+            kategori = dataInput[indexReq].kategori;
+          } else {
+            kategori.push(dataInput[indexReq].kategori);
+          }
+
+          var responseData = {
+            informasi: result,
+            kategori: kategori,
+            location: {
+              latitude: coor_loc.lat,
+              longitude: coor_loc.lng,
+            },
+            reviews: result2.reviews,
+          };
+
+          responseData.reviews = responseData.reviews.filter(function (el) {
+            return el != "";
+          });
+
+          responseData.reviews.splice(100);
+          var reviews = responseData.reviews;
+
+          fs.writeFileSync(
+            "./Data Output/" + responseData.informasi.tempat + ".json",
+            JSON.stringify(responseData, null, 2)
+          );
+
+          var options = {
+            uri: "http://127.0.0.1/sentiment/",
+            method: "POST",
+            body: {
+              reviews: responseData.reviews,
+            },
+            json: true,
+          };
+
+          var score_review = await request2(options);
+
+          var finalData = {
+            tempat: responseData.informasi.tempat,
+            alamat: responseData.informasi.alamat,
+            kota: responseData.informasi.kota,
+            jam_buka: responseData.informasi.jam_buka,
+            kategori: responseData.kategori,
+            location: responseData.location,
+            review: score_review.reviews,
+            sentiment_score: score_review.total_score,
+            url: url,
+          };
+
+          MongoClient.connect(urlMongo, function (err, db) {
+            if (err) throw err;
+            db.collection("final_datas").insertOne(finalData, function (err, res) {
+              if (err) throw err;
+              console.log(finalData.tempat + " Berhasil ditambahkan");
+              db.close();
+            });
+          });
+
+          await browser.close();
+        }
+      } catch (err) {
+        console.log("data gagal ditambahkan");
       }
+
     }
     console.log("Sukses");
   })();

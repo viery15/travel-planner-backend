@@ -28,6 +28,7 @@ exports.index = async function (req, res) {
   };
 
   var userKategori = req.body.kategori;
+  var waktuMulai = req.body.waktuMulai;
 
   if (!Array.isArray(userKategori)) {
     userKategori = [];
@@ -47,7 +48,8 @@ exports.index = async function (req, res) {
     var result = await setItinerary(
       tujuanWisata[index],
       userLocation,
-      tanggalWisata.mulai
+      tanggalWisata.mulai,
+      waktuMulai
     );
     itinerary.push(result);
   }
@@ -177,8 +179,8 @@ function compare(a, b) {
   return 0;
 }
 
-async function setItinerary(dataTujuan, start, tanggalBerkunjung) {
-  var jamBerangkat = "08:00";
+async function setItinerary(dataTujuan, start, tanggalBerkunjung, waktuMulai) {
+  var jamBerangkat = waktuMulai;
   var keterangan = "Perjalanan dari lokasi anda menuju ";
   var keteranganPerjalanan = {
     start: start.latitude + "," + start.longitude,

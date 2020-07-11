@@ -1,0 +1,133 @@
+[
+    {
+        "url" : "https://www.google.com/maps/place/Taman+Wisata+Study+Lingkungan+Kota+Probolinggo/@-7.8391239,112.963235,10z/data=!4m8!1m2!2m1!1swisata+Probolinggo!3m4!1s0x2dd7adb41519b6d1:0x7c0745f4191e5a45!8m2!3d-7.7481068!4d113.2346787",
+        "kategori" : [
+            "Edukasi",
+            "Kebun Binatang",
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Duta/@-7.8375781,112.9632319,10z/data=!4m8!1m2!2m1!1swisata+Probolinggo!3m4!1s0x2dd704026d1b27e7:0x7eca90a4004b621e!8m2!3d-7.7036546!4d113.4785054",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Probolinggo+Municipal+Government+Museum/@-7.8375781,112.9632319,10z/data=!4m8!1m2!2m1!1swisata+Probolinggo!3m4!1s0x2dd7adbdf787ebd5:0x5c0713b617aa9f1a!8m2!3d-7.7510777!4d113.2157441",
+        "kategori" : [
+            "Museum",
+            "Edukasi"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Bentar+Beach/@-7.831395,112.9632193,10z/data=!4m8!1m2!2m1!1swisata+probolinggo!3m4!1s0x2dd7ad8fcd0c6733:0xc8746415d15bb65a!8m2!3d-7.7795882!4d113.2766873",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+BJBR/@-7.831395,112.9632193,10z/data=!4m8!1m2!2m1!1swisata+probolinggo!3m4!1s0x2dd7adc4fa6f8017:0x7ed817cef3ef85eb!8m2!3d-7.7358059!4d113.2236972",
+        "kategori" : [
+            "Pantai",
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Air+Terjun+Jaran+Goyang/@-7.831395,112.9632193,10z/data=!4m8!1m2!2m1!1swisata+probolinggo!3m4!1s0x2dd6f99110468cef:0x655a94210215cadb!8m2!3d-7.9208146!4d113.4602463",
+        "kategori" : [
+            "Air Terjun"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Tpi+Ujung+Hijau+PROBOLINGGO/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7add874f42b8d:0x52a6292bf84cf49f!8m2!3d-7.7246424!4d113.2279629",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Happy+Fun+3+Probolinggo/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7ace7cc5bf64d:0x2ead833af10da50b!8m2!3d-7.7815062!4d113.2503557",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Tambak+Sari/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7aa7b60959d0f:0x1445d27e0bf8e861!8m2!3d-7.7513275!4d113.372016",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Bohay/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7031b9e1f0dbf:0xbc0c3fed15d1aaa!8m2!3d-7.7142327!4d113.5600208",
+        "kategori" : [
+            "Pantai",
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Jabung+Temple/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd70160580ad9d1:0x83ef4864691e539!8m2!3d-7.735277!4d113.4717187",
+        "kategori" : [
+            "Edukasi",
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Miniature+Religious+Tourism+Kaaba/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7aca3f7bf7a37:0x245fa43b0ff3fe68!8m2!3d-7.7870663!4d113.2803224",
+        "kategori" : [
+            "Edukasi",
+            "Religi"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Museum+Dr.+Moh.+Saleh/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7ad96500e4fc5:0xa9cfbb45399ba3c8!8m2!3d-7.7523179!4d113.2135474",
+        "kategori" : [
+            "Edukasi",
+            "Museum"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Agrotourism+UPM+(Kokab)/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7b306b0b643bf:0x33afbf85e68652f6!8m2!3d-7.7742363!4d113.1375406",
+        "kategori" : [
+            "Rekreasi Air",
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Tugu+Arak-arak/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd6e03db450e1b1:0x8a88a65f50e9f17d!8m2!3d-7.7893745!4d113.7367231",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Snorkelling+Gili+Ketapang/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd7af016459f547:0x6ce261d1bcc43ab8!8m2!3d-7.6797563!4d113.2448941",
+        "kategori" : [
+            "Rekreasi Air",
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Songa+Rafting+Probolinggo/@-7.010523,107.8779962,7z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd65645e8c9a5a7:0x3e3e9530d06d8050!8m2!3d-7.9086075!4d113.3518392",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Mahagoni+Grand+Park/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd64eea38246a4f:0x9bcc283f15db3c77!8m2!3d-7.91672!4d113.122535",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Madakaripura+Forest+Park/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd64a93d4d8ccb1:0x4f2e54fb72990e52!8m2!3d-7.8452003!4d113.0192636",
+        "kategori" : [
+            "Taman",
+            "Air Terjun"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Bukit+Bintang+Arak+Arak/@-7.831395,112.9632193,10z/data=!4m9!1m3!2m2!1swisata+probolinggo!6e1!3m4!1s0x2dd6e03d67de140b:0xc7f23267f1980544!8m2!3d-7.7870036!4d113.7387574",
+        "kategori" : [
+            "Taman"
+        ]
+    }
+]

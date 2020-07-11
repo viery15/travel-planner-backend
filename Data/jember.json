@@ -1,0 +1,143 @@
+[
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Payangan/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd427f96abc1d45:0x349dbb12eb1ac295!8m2!3d-8.436409!4d113.581299",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Teluk+Love/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6942520c45715:0x3cabb1f5dd90a01b!8m2!3d-8.4408415!4d113.5892279",
+        "kategori" : [
+            "Pantai",
+            "Bukit"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Papuma/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6942520c45715:0x359b23c72224d89!8m2!3d-8.4300871!4d113.5536464",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Papuma/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6942520c45715:0x359b23c72224d89!8m2!3d-8.4300871!4d113.5536464",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Tiara+Jember+Park+Waterboom/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd695c564591181:0xac0bf1fe206fea77!8m2!3d-8.1662992!4d113.7307102",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Taman+Botani+Sukorambi+Jember/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6938b73a5abf7:0x1f02ba93aedf2352!8m2!3d-8.162422!4d113.663057",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Museum+Tembakau+Jember/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6944ad81946b5:0xdee0037fbed61b53!8m2!3d-8.1588294!4d113.7149095",
+        "kategori" : [
+            "Museum"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Jumerto+Rafting/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6948b82f26a0f:0x12583c431621ae25!8m2!3d-8.1380657!4d113.6887937",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Kolam+Renang+Green+Hill/@-8.2728409,113.5067039,11z/data=!4m8!1m2!2m1!1swisata+jember!3m4!1s0x2dd6951ac37fced9:0xad7a6bd168e202e3!8m2!3d-8.1292728!4d113.7255268",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/DIRA+PARK/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd69c6f29c08d4d:0x50c153ad406e2d6a!8m2!3d-8.364034!4d113.6351611",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Pantai+Pancer/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd681623f8ec30b:0x4953576f1656c6df!8m2!3d-8.385842!4d113.4759972",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Watu+Ulo/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd682b01c09c70d:0x6748195ba289c407!8m2!3d-8.42473!4d113.562",
+        "kategori" : [
+            "Pantai"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+simbat/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd6852bc38ac1df:0xccc803732f400abd!8m2!3d-8.3101755!4d113.5640092",
+        "kategori" : [
+            "Bukit"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+Education+Pusat+Penelitian+Kopi+Kakao+Jember/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd69a0eddab97dd:0x229c5579831f9102!8m2!3d-8.2563647!4d113.6113995",
+        "kategori" : [
+            "Edukasi"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+Warung+Air+Glantangan+(WAG)/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd699154285c565:0x124a6a64140914eb!8m2!3d-8.3244941!4d113.6930764",
+        "kategori" : [
+            "Taman",
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Agrowisata+Gunung+Pasang+Jember/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd6ecd3eec33571:0xbaba8044c2b77afe!8m2!3d-8.101584!4d113.627456",
+        "kategori" : [
+            "Bukit",
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Museum+Huruf+Jember/@-8.2627929,113.5468349,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd694315ce45387:0x875809e8f09cfd45!8m2!3d-8.1678119!4d113.7091128",
+        "kategori" : [
+            "Museum"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Mumbul+Garden/@-8.2563841,113.5538681,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd697af67fce871:0xd2d7271cead8518e!8m2!3d-8.2312037!4d113.7231591",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+Alam+%22BDR%22/@-8.2563841,113.5538681,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd6a1a74cccd5d9:0x46390f003456b111!8m2!3d-8.3635006!4d113.809889",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Super+Galaxy/@-8.2563841,113.5538681,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd699bd96fc7d7f:0x81d346a4d13e5d6e!8m2!3d-8.2913534!4d113.6930075",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Kampoeng+Batja/@-8.2563841,113.5538681,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd694460407525d:0x55e8c806db531fee!8m2!3d-8.1572775!4d113.7034053",
+        "kategori" : [
+            "Taman"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Kolam+renang+dira/@-8.1903071,113.4860007,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd663839b8d5fdb:0x6c68638b39279808!8m2!3d-8.2635882!4d113.3578901",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    },
+    {
+        "url" : "https://www.google.com/maps/place/Wisata+Tiara+Jember+Park+Waterboom/@-8.1903071,113.4860007,11z/data=!4m9!1m3!2m2!1swisata+jember!6e1!3m4!1s0x2dd695c43482ce2f:0x39fd80dafcf24584!8m2!3d-8.1657852!4d113.7307976",
+        "kategori" : [
+            "Rekreasi Air"
+        ]
+    }
+]
