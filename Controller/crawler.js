@@ -18,88 +18,83 @@ exports.index = async function (req, res) {
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   ); // If needed
 
-  var dataReq = await getByKota("Malang");
-  // console.log(dataReq);
-  // var dataReq = req.body.data;
   console.log('start');
 
   (async () => {
-    for (let indexReq = 0; indexReq < dataReq.length; indexReq++) {
-      console.log(dataReq[indexReq].tempat + " --> Start")
-      var url = dataReq[indexReq].url;
-      const browser = await puppeteer.launch({
-        // headless: false,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--disable-extensions",
-        ],
-      });
-      const page = await browser.newPage();
+    var url = req.body.url;
+    const browser = await puppeteer.launch({
+      // headless: false,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-extensions",
+      ],
+    });
+    const page = await browser.newPage();
 
-      await page.goto(url, {
-        waitUntil: "networkidle2",
-        timeout: 0,
-      });
+    await page.goto(url, {
+      waitUntil: "networkidle2",
+      timeout: 0,
+    });
 
-      await page.waitForSelector(".widget-pane-link", {
-        visible: true,
-      });
+    await page.waitForSelector(".widget-pane-link", {
+      visible: true,
+    });
 
-      const result = await page.evaluate(() => {
-        var informasi = document.querySelectorAll("span.widget-pane-link");
-        var tempat = document.getElementsByClassName(
-          "GLOBAL__gm2-headline-5 section-hero-header-title-title"
-        );
-        var hari = document.querySelectorAll("th > div:nth-child(1)");
-        var jam = document.querySelectorAll("td.lo7U087hsMA__row-data > ul > li");
-        var jam_buka = {};
-        for (let i = 0; i < 7; i++) {
-          jam_buka[hari[i].innerText] = jam[i].innerText;
-        }
-
-        var alamatLengkap = document.querySelectorAll(
-          "div.ugiz4pqJLAG__primary-text.gm2-body-2"
-        )[0].innerText;
-
-        alamat = alamatLengkap.split(",");
-        var kota = alamat[alamat.length - 2];
-
-        let data = {
-          tempat: tempat[0].innerText,
-          alamat: alamatLengkap,
-          kota: kota,
-          jam_buka: jam_buka,
-        };
-        return data;
-      });
-
-      var kota_jatim = {
-        Surabaya: [" Surabaya City", " Kota SBY"],
-        Malang: [" Kota Malang", " Malang"],
-        Batu: [" Kota Batu", "Batu"],
-        Blitar: [" Kota Blitar", " Blitar"],
-        Kediri: [" Kota Kediri", " Kediri"],
-        Pacitan: [" Kabupaten Pacitan", " Kediri"],
-      };
-
-      for (var key_kota in kota_jatim) {
-        for (let index = 0; index < kota_jatim[key_kota].length; index++) {
-          if (kota_jatim[key_kota][index] == result.kota) {
-            result.kota = key_kota;
-          }
-        }
+    const result = await page.evaluate(() => {
+      var informasi = document.querySelectorAll("span.widget-pane-link");
+      var tempat = document.getElementsByClassName(
+        "GLOBAL__gm2-headline-5 section-hero-header-title-title"
+      );
+      var hari = document.querySelectorAll("th > div:nth-child(1)");
+      var jam = document.querySelectorAll("td.lo7U087hsMA__row-data > ul > li");
+      var jam_buka = {};
+      for (let i = 0; i < 7; i++) {
+        jam_buka[hari[i].innerText] = jam[i].innerText;
       }
 
-      // var status_tempat = await checkRedundan(result.tempat);
+      var alamatLengkap = document.querySelectorAll(
+        "div.ugiz4pqJLAG__primary-text.gm2-body-2"
+      )[0].innerText;
 
-      // if (status_tempat == "exist") {
-      //   console.log("Data already exist\nCrawler Stopped");
+      alamat = alamatLengkap.split(",");
+      var kota = alamat[alamat.length - 2];
 
-      //   response.ok("Data already exist", res);
+      let data = {
+        tempat: tempat[0].innerText,
+        alamat: alamatLengkap,
+        kota: kota,
+        jam_buka: jam_buka,
+      };
+      return data;
+    });
 
-      //   await browser.close();
-      // } else {
+    var kota_jatim = {
+      Surabaya: [" Surabaya City", " Kota SBY"],
+      Malang: [" Kota Malang", " Malang"],
+      Batu: [" Kota Batu", "Batu"],
+      Blitar: [" Kota Blitar", " Blitar"],
+      Kediri: [" Kota Kediri", " Kediri"],
+      Pacitan: [" Kabupaten Pacitan", " Kediri"],
+    };
+
+    for (var key_kota in kota_jatim) {
+      for (let index = 0; index < kota_jatim[key_kota].length; index++) {
+        if (kota_jatim[key_kota][index] == result.kota) {
+          result.kota = key_kota;
+        }
+      }
+    }
+
+    var status_tempat = await checkRedundan(result.tempat);
+
+    if (status_tempat == "exist") {
+      console.log("Data already exist\nCrawler Stopped");
+
+      response.ok("Data already exist", res);
+
+      await browser.close();
+    } else {
       console.log("informasi umum berhasil ditambahkan");
       await page.waitForSelector(
         "#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-layout.section-layout-justify-space-between.section-layout-vertically-center-content.section-layout-flex-vertical.section-layout-flex-horizontal > div.iRxY3GoUYUY__actionicon > div > button"
@@ -184,11 +179,9 @@ exports.index = async function (req, res) {
       var coor_loc = await getCoordinat(result.tempat);
 
       var kategori = [];
-      if (Array.isArray(dataReq[indexReq].kategori)) {
-        kategori = dataReq[indexReq].kategori;
-      } else {
-        kategori.push(dataReq[indexReq].kategori);
-      }
+
+      kategori.push(req.body.kategori);
+
 
       var responseData = {
         informasi: result,
@@ -284,11 +277,10 @@ exports.index = async function (req, res) {
 
       // });
 
-      // response.ok(finalData, res);
-      await deleteByUrl(dataReq[indexReq].url);
+      response.ok(finalData, res);
       await browser.close();
-      // }
     }
+
     console.log("Sukses");
   })();
 
